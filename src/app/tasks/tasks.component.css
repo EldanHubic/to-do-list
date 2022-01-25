@@ -1,0 +1,24 @@
+
+
+#buttons {
+    display: flex;
+    justify-content: end;
+    border-bottom-width: 0;
+}
+
+.btn-primary {
+    margin-right: 10px;
+}
+
+.table-row {
+    background-color: whitesmoke;
+    border-bottom: gray 1px solid;
+}
+
+.table-data {
+    padding-top: 13px;
+}
+
+.form-check-input{
+    border: 1px solid #328ba8;
+}

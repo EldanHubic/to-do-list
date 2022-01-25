@@ -1,0 +1,32 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "otići po smeće",
+      "date": "25.01.2022",
+      "done": false,
+      "deadline": "28.01.2022"
+    },
+    {
+      "id": 2,
+      "text": "Popiti kafu ",
+      "date": "25.01.2022",
+      "done": false,
+      "deadline": "06.02.2022"
+    },
+    {
+      "id": 3,
+      "text": "Uraditi task",
+      "date": "25.01.2022",
+      "done": false,
+      "deadline": "03.02.2022"
+    },
+    {
+      "id": 4,
+      "text": "Trčanje",
+      "date": "25.01.2022",
+      "done": false,
+      "deadline": "02.02.2022"
+    }
+  ]
+}

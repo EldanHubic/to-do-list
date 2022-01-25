@@ -1,0 +1,9 @@
+#content {
+    /* background-color: whitesmoke; */
+    display: flex;
+    justify-content: center;
+}
+
+#search {
+    width: 300px;
+}

@@ -1,0 +1,42 @@
+<button type="button" class="btn btn-success" (click)="addTodo()">
+  <i class="fa fa-plus-circle"></i>Add task
+</button>
+
+<div>
+  <div class="input-group input-group-md">
+    <input
+      [(ngModel)]="text"
+      type="text"
+      class="form-control mb-1"
+      aria-label="Sizing example input"
+      aria-describedby="inputGroup-sizing-lg"
+      placeholder="Add task.."
+      value="{{ text }}"
+    />
+  </div>
+  <form name="datepickerForm" class="form-inline" role="form">
+    <div
+      class="form-group"
+      ng-class="{ 'has-error': datepickerForm.date2.$invalid }"
+    >
+      <label class="control-label"
+        ><i class="fa fa-calendar"></i> Deadline</label
+      >
+      <input
+        [(ngModel)]="deadline"
+        value="30-11-2020"
+        type="date"
+        class="form-control"
+        data-date-format="dd-MM-yyyy"
+        data-date-type="number"
+        data-min-date="today"
+        data-autoclose="1"
+        name="date2"
+        bs-datepicker
+      />
+    </div>
+
+    <hr />
+    <!-- Date range example -->
+  </form>
+</div>
