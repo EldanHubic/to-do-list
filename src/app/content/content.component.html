@@ -1,17 +1,19 @@
-<div class="input-group mb-3 " id="search">
-    <span class="input-group-text" id="inputGroup-sizing-default"><i class="fa fa-search"></i></span>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Search task.."
-      aria-label="Sizing example input"
-      aria-describedby="inputGroup-sizing-default"
-      
-    />
-  </div>
+<!-- <div class="input-group mb-3" id="search">
+  <span class="input-group-text" id="inputGroup-sizing-default"
+    ><i class="fa fa-search"></i
+  ></span>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Search task.."
+    aria-label="Sizing example input"
+    aria-describedby="inputGroup-sizing-default"
+    [(ngModel)]="search"
+  />
+</div> -->
 
 <div id="content">
-    <app-add-task [todo] = "tasks"></app-add-task>
+  <app-add-task [todo]="tasks"></app-add-task>
 </div>
 
-<app-tasks [todo] = "tasks" ></app-tasks>
+<app-tasks [todo]="tasks"></app-tasks>

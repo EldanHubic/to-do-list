@@ -10,20 +10,19 @@ import { ITask } from '../tasks/itask';
 export class ContentComponent implements OnInit {
   constructor(private crudHttpService: CrudHttpService) {}
   tasks: ITask[] = [];
+  filterArray: ITask[] = [];
   sub!: Subscription;
   errorMessage: string = '';
-  search: string = '';
+  // _search: string = '';
   
-  get getSearch() {
-    return this.search;
-  }
+  // get search() {
+  //   return this._search;
+  // }
 
-  set setSearch(value: string) {
-    this.search = value;
-    console.log(value);
-    
-    
-  }
+  // set search(value: string) {
+  //   this._search = value;
+  //   this.filterArray = this.filterTasks(value);    
+  // }
 
   ngOnInit(): void {
     this.listTodos();
@@ -34,10 +33,22 @@ export class ContentComponent implements OnInit {
     this.sub = this.crudHttpService.getTasks().subscribe({
       next: (task) => {
         this.tasks = task;
+        this.filterArray = task;
       },
       error: (err) => (this.errorMessage = err),
     });
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+
+  // filterTasks(value: string): ITask[] {
+  //   value.toLocaleLowerCase();
+  //   return this.tasks.filter((task: ITask) => {
+  //     task.text.toLocaleLowerCase().includes(value);
+  //   });
+  // }
   
 }

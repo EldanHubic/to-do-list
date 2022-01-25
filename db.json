@@ -1,25 +1,18 @@
 {
   "tasks": [
     {
-      "id": 3,
+      "id": 1,
       "text": "Editovani task",
-      "date": "neki datum",
+      "date": "Editovani datum",
       "done": true,
-      "deadline": "neki deadline"
+      "deadline": "Editovani deadline"
     },
     {
-      "id": 4,
-      "text": "Editovani task",
-      "date": "neki datum",
-      "done": true,
-      "deadline": "neki deadline"
-    },
-    {
-      "id": 5,
-      "text": "aaa",
+      "id": 2,
+      "text": "ići u teretanu",
       "date": "25.01.2022",
       "done": false,
-      "deadline": "28.01.2022"
+      "deadline": "27.01.2022"
     }
   ]
 }

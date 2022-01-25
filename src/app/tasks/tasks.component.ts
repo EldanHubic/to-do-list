@@ -12,18 +12,20 @@ import { ITask } from './itask';
 export class TasksComponent implements OnInit {
   constructor(private crudHttpService: CrudHttpService) {}
   @Input() todo: ITask[] = [];
-  
+  @Input() fArray: ITask[] = [];
   isComplete: boolean = false;
   sub!: Subscription;
   errorMessage = '';
-
+  @Input() search: string = '';
   
+  
+
   ngOnInit(): void {
       
   }
-  //ispiši sve todo
   
-
+  
+  //obriši task
   deleteTodo(tasks: ITask): void {
     this.crudHttpService.deleteTodo(tasks).subscribe((data) => {
       console.log(data);
@@ -31,37 +33,26 @@ export class TasksComponent implements OnInit {
     });
   }
 
+  //update task
   updateTodo(task: ITask): void {
     let data = {
       id: 10,
       text: "Editovani task",
-      date: "neki datum",
+      date: "Editovani datum",
       done: true,
-      deadline: "neki deadline" 
+      deadline: "Editovani deadline" 
     }
-    this.crudHttpService.updateTask(task.id, data).subscribe((response)=>{
+    this.sub = this.crudHttpService.updateTask(task.id, data).subscribe((response)=>{
       window.location.reload();
     },(error=>{
 
     }));
   }
 
-  
- 
-
-  completeTask(): void {
-    if(this.isComplete) {
-      this.isComplete = false;
-    } else {
-      this.isComplete = true;
-    }
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
-  // filterTasks(value: string): ITask[] {
-  //   value.toLocaleLowerCase();
-  //   return this.todo.filter((task: ITask) => {
-  //     task.text.toLocaleLowerCase().includes(value);
-  //   });
-  // }
+  
 
 }
