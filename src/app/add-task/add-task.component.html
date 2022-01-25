@@ -1,17 +1,12 @@
-<button type="button" class="btn btn-success" (click)="addTodo()">
-  <i class="fa fa-plus-circle"></i>Add task
-</button>
-
 <div>
   <div class="input-group input-group-md">
     <input
-      [(ngModel)]="text"
       type="text"
       class="form-control mb-1"
       aria-label="Sizing example input"
       aria-describedby="inputGroup-sizing-lg"
       placeholder="Add task.."
-      value="{{ text }}"
+      [(ngModel)] = "_text"
     />
   </div>
   <form name="datepickerForm" class="form-inline" role="form">
@@ -37,6 +32,9 @@
     </div>
 
     <hr />
-    <!-- Date range example -->
+  
   </form>
+  <button type="button" class="btn btn-success" (click)="addTodo()">
+    <i class="fa fa-plus-circle"></i>Add task
+  </button>
 </div>

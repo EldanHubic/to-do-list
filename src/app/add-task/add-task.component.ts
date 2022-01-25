@@ -17,17 +17,11 @@ export class AddTaskComponent implements OnInit {
   _deadline: string = '';
   private id: number = 0;
   @Input() todo: ITask[] = [];
-  get text() {
-    return this._text;
-  }
 
   get deadline() {
     return this._deadline;
   }
 
-  set text(value: string) {
-    this._text = value;
-  }
 
   set deadline(date: string) {
     this._deadline = date;

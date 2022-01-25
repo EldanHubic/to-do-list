@@ -31,13 +31,22 @@ export class TasksComponent implements OnInit {
     });
   }
 
-  @Input() updateTodo(task: ITask): void {
+  updateTodo(task: ITask): void {
+    let data = {
+      id: 10,
+      text: "Editovani task",
+      date: "neki datum",
+      done: true,
+      deadline: "neki deadline" 
+    }
+    this.crudHttpService.updateTask(task.id, data).subscribe((response)=>{
+      window.location.reload();
+    },(error=>{
 
+    }));
   }
 
-  @Input() getTextValue(): void {
-    
-  }
+  
  
 
   completeTask(): void {

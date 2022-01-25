@@ -46,7 +46,7 @@ export class CrudHttpService {
 
 
   //update task
-  updateTask(id: any, data: any): Observable<any> {
+  updateTask(id: any, data: ITask): Observable<any> {
     let API_URL = `${this.apiUrl}/${id}`;
     return this.http.put(API_URL, data, { headers: this.headers }).pipe(
       catchError(this.errorHandler)
