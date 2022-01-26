@@ -1,7 +1,22 @@
+<div class="input-group mb-4"  style="width: 300px">
+  <span class="input-group-text" id="inputGroup-sizing-default"
+    ><i class="fa fa-search"></i
+  ></span>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Search task.."
+    aria-label="Sizing example input"
+    aria-describedby="inputGroup-sizing-default"
+    [(ngModel)] = "search"
+  />
+</div>
+
 <table class="table table-borderless">
   <thead>
     <tr>
       <!-- <th scope="col">ID</th> -->
+      <th score="col">ID</th>
       <th scope="col">Text</th>
       <th scope="col">Task added</th>
       <th scope="col">Done ?</th>
@@ -10,9 +25,9 @@
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody style="border: 1px solid #328ba8;">
-    <tr class="table-row" *ngFor="let task of todo">
-      <!-- <th class="table-data" scope="row">{{ task.id }}.</th> -->
+  <tbody style="border: 1px solid #328ba8">
+    <tr class="table-row" *ngFor="let task of filterArray">
+      <th class="table-data" scope="row">{{ task.id }}.</th>
       <td class="table-data">
         <input
           class="form-control"
@@ -27,7 +42,10 @@
         <b>{{ task.date | convertDashToSpace: "-" }}</b>
       </td>
       <td class="table-data">
-        <b>{{ task.done ? "Done" : "Not-done" }}</b>
+        <b *ngIf="!task.done"><i class="fa fa-times" style="color: red"></i></b>
+        <b *ngIf="task.done"
+          ><i class="fa fa-check" style="color: green"></i
+        ></b>
       </td>
       <td class="table-data" style="color: red">
         <input

@@ -2,10 +2,18 @@
     width: 500px;
 }
 
-.btn-success {
+.btn-warning {
     margin-bottom: 50px;
+    background: #035E7B;
+    color: white;
+    border: 1px;
+    border-radius: 0;
 }
 
 .fa-plus-circle {
     margin-right: 5px;
+}
+
+.fa-calendar {
+    color: red;
 }

@@ -46,7 +46,7 @@ export class AddTaskComponent implements OnInit {
     };
     this.sub = this.crudHttpService.addTodo(task).subscribe((data) => {
       this.todo.push(data);
-      console.log(data);
+      this._text = '';
     });
   }
 

@@ -10,6 +10,7 @@ import { ITask } from '../tasks/itask';
 export class ContentComponent implements OnInit {
   constructor(private crudHttpService: CrudHttpService) {}
   tasks: ITask[] = [];
+  filterArray: ITask[] = [];
   sub!: Subscription;
   errorMessage: string = '';
   // _search: string = '';
@@ -32,6 +33,7 @@ export class ContentComponent implements OnInit {
     this.sub = this.crudHttpService.getTasks().subscribe({
       next: (task) => {
         this.tasks = task;
+        this.filterArray = this.tasks;
       },
       error: (err) => (this.errorMessage = err),
     });
@@ -45,11 +47,6 @@ export class ContentComponent implements OnInit {
   
 
 
-  // filterTasks(value: string): ITask[] {
-  //   value.toLocaleLowerCase();
-  //   return this.tasks.filter((task: ITask) => {
-  //     task.text.toLocaleLowerCase().includes(value);
-  //   });
-  // }
+ 
   
 }

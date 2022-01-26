@@ -7,6 +7,7 @@
       aria-describedby="inputGroup-sizing-lg"
       placeholder="Add task.."
       [(ngModel)] = "_text"
+      minlength="1" maxlength="60"
     />
   </div>
   <form name="datepickerForm" class="form-inline" role="form">
@@ -34,7 +35,7 @@
     <hr />
   
   </form>
-  <button type="button" class="btn btn-success" (click)="addTodo()">
+  <button type="button" class="btn btn-warning" (click)="addTodo()">
     <i class="fa fa-plus-circle"></i>Add task
   </button>
 </div>

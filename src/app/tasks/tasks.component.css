@@ -1,4 +1,14 @@
+.form-control {
+    border-radius: 0;
+}
 
+.input-group-text {
+    background: #035E7B;
+    border-radius: 0;
+}
+.fa-search {
+    color: white;
+}
 
 #buttons {
     display: flex;
@@ -8,21 +18,33 @@
 
 .btn-primary {
     margin-right: 10px;
+    border-radius: 0;
+    background: #035E7B;
+    border: 1px;
+}
+
+.btn-danger {
+    border-radius: 0;
+    background: #d91424;
+    border: 1px;
 }
 
 .btn-success {
     margin-right: 10px;
+    border-radius: 0;
+    background: #228f28;
+    color: white;
+    border: 1px;
 }
 
 .table-row {
     background-color: whitesmoke;
-    
 }
 
 
 
 .table-data {
-    padding-top: 13px;
+    padding-top: 12px;
 }
 
 .form-check-input{
