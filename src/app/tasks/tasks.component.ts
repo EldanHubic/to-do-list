@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CrudHttpService } from '../crud-http.service';
 import { ITask } from './itask';
-
 
 @Component({
   selector: 'app-tasks',
@@ -10,60 +10,105 @@ import { ITask } from './itask';
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
-  constructor(private crudHttpService: CrudHttpService) {}
+  constructor(
+    private crudHttpService: CrudHttpService,
+    private router: Router
+  ) {}
   @Input() todo: ITask[] = [];
   isComplete: boolean = false;
   sub!: Subscription;
   errorMessage = '';
   status: string = '';
-  @Input() search: string = '';
-  
-  
+  newText = '';
+  newDeadline = '';
+  selectedTask: ITask = {
+    id: 0,
+    text: '',
+    date: '',
+    done: false,
+    deadline: '',
+  };
+  isEdited: boolean = false;
 
-  ngOnInit(): void {
-   
+  set deadline(value: string) {
+    this.newDeadline = value;
   }
 
-  listTodos() {
-    this.sub = this.crudHttpService.getTasks().subscribe({
-      next: (task) => {
-        this.todo = task;
-      },
-      error: (err) => (this.errorMessage = err),
-    });
-  } 
-  
+  isClicked: boolean = false;
+  @Input() search: string = '';
+
+  ngOnInit(): void {}
+
   //obriši task
   deleteTodo(id: number): void {
     this.crudHttpService.deleteTodo(id).subscribe((data) => {
-      this.todo.splice(id, 1);
-      this.status = "Delete successful";
-      console.log(this.status);
-      
-      this.listTodos();
+      const index = this.todo.findIndex((el) => el.id === id);
+      if (id > -1) {
+        this.todo.splice(index, 1);
+      }
     });
   }
 
   //update task
-  updateTodo(task: ITask): void {
-    let data = {
-      id: 10,
-      text: "Editovani task",
-      date: "Editovani datum",
-      done: true,
-      deadline: "Editovani deadline" 
-    }
-    this.sub = this.crudHttpService.updateTask(task.id, data).subscribe((response)=>{
-      window.location.reload();
-    },(error=>{
-
-    }));
+  showHideEdit(task: ITask): void {
+    this.selectedTask = {
+      id: task.id,
+      text: task.text,
+      date: task.date,
+      done: task.done,
+      deadline: task.deadline,
+    };
+    console.log(this.selectedTask);
+    this.isClicked = true;
+    console.log(this.isClicked);
   }
 
+  updateTodo(task: ITask) {
+    let _newDeadline = this.newDeadline.split('-');
+    this.newDeadline = `${_newDeadline[2]}.${_newDeadline[1]}.${_newDeadline[0]}`;
+    let newTask = {
+      id: task.id,
+      text: this.newText,
+      date: task.date,
+      done: task.done,
+      deadline: this.newDeadline,
+    };
+    this.sub = this.crudHttpService.updateTask(task.id, newTask).subscribe(
+      () => {
+        const index = this.todo.findIndex((el) => el.id === this.selectedTask.id);
+      if (this.selectedTask.id > -1) {
+        this.todo.splice(index, 1, newTask);
+        this.newText = '';
+      }
+        this.selectedTask = {
+          id: 0,
+          text: '',
+          date: '',
+          done: false,
+          deadline: '',
+        };
+      },
+      (error) => {}
+    );
+    this.isClicked = false;
+    console.log(this.selectedTask);
+  }
+
+  cancel(): void {
+    this.isClicked = false;
+    this.selectedTask = {
+      id: 0,
+      text: '',
+      date: '',
+      done: false,
+      deadline: '',
+    };
+  }
+
+  // MyCtrl($scope: any, $filter: any) {
+  //   $scope.date = $filter('date')(Date.now(), 'yyyy-MM-dd');
+  // }
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
-  
-
 }

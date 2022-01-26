@@ -10,11 +10,16 @@
     margin-right: 10px;
 }
 
+.btn-success {
+    margin-right: 10px;
+}
+
 .table-row {
     background-color: whitesmoke;
     
-    
 }
+
+
 
 .table-data {
     padding-top: 13px;

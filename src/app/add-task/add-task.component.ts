@@ -31,18 +31,7 @@ export class AddTaskComponent implements OnInit {
  
   }
 
-  listTodos() {
-    console.log('listTodos func');
-    
-    this.sub = this.crudHttpService.getTasks().subscribe({
-      next: (task) => {
-        this.todo = task;
-      },
-      error: (err) => (this.errorMessage = err),
-    });
-  }
 
- 
 
   addTodo(): void {
     const currentDate = format(new Date(), 'dd.MM.yyyy');
@@ -58,7 +47,6 @@ export class AddTaskComponent implements OnInit {
     this.sub = this.crudHttpService.addTodo(task).subscribe((data) => {
       this.todo.push(data);
       console.log(data);
-      this.listTodos()
     });
   }
 
