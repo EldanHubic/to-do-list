@@ -36,10 +36,10 @@ export class CrudHttpService {
 
 
   //delete task
-  deleteTodo(task: ITask): Observable<any> {
-    var API_URL = `${this.apiUrl}/${task.id}`;
+  deleteTodo(id: number): Observable<any> {
+    let API_URL = `${this.apiUrl}/${id}`;
     return this.http.delete(API_URL).pipe(
-      catchError(this.errorHandler)
+      catchError(this.errorHandler) 
     )
   }
 

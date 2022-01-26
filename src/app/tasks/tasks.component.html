@@ -1,30 +1,42 @@
 <table class="table table-borderless">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Text</th>
-        <th scope="col">Task added</th>
-        <th scope="col">Done ?</th>
-        <th scope="col">Deadline</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <a href=""></a>
-      <tr class="table-row" *ngFor="let task of todo">
-        
-        <th class="table-data" scope="row">{{ task.id }}.</th>
-        <td class="table-data"> <a [routerLink]="['/tasks', task.id ]" style="text-decoration: none;"><b>{{task.text | uppercase}}</b></a></td>
-        <td class="table-data" style="color: green;"><b>{{task.date}}</b></td>
-        <td class="table-data" ><b>{{task.done ? "Done" : "Not-done"}}</b></td>
-        <td class="table-data" style="color: red"><b>{{task.deadline | convertDashToSpace: '-'}}</b></td>
-        <td class="table-data" style="padding-top: 18px;"></td>
-        <td id="buttons" ><button class="btn btn-primary" (click)="updateTodo(task)"><i class="fa fa-pencil"></i></button><button  class="btn btn-danger" (click)="deleteTodo(task)"><i class="fa fa-trash"></i></button></td>
-        
-      </tr>
-    </tbody>
-  </table>
-
-  
+  <thead>
+    <tr>
+      <!-- <th scope="col">ID</th> -->
+      <th scope="col">Text</th>
+      <th scope="col">Task added</th>
+      <th scope="col">Done ?</th>
+      <th scope="col">Deadline</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <a href=""></a>
+    <tr class="table-row" *ngFor="let task of todo">
+      <!-- <th class="table-data" scope="row">{{ task.id }}.</th> -->
+      <td class="table-data">
+        <a [routerLink]="['/tasks', task.id]" style="text-decoration: none"
+          ><b>{{ task.text | uppercase }}</b></a
+        >
+      </td>
+      <td class="table-data" style="color: green">
+        <b>{{ task.date }}</b>
+      </td>
+      <td class="table-data">
+        <b>{{ task.done ? "Done" : "Not-done" }}</b>
+      </td>
+      <td class="table-data" style="color: red">
+        <b>{{ task.deadline | convertDashToSpace: "-" }}</b>
+      </td>
+      <td class="table-data" style="padding-top: 18px"></td>
+      <td id="buttons">
+        <button class="btn btn-primary" (click)="updateTodo(task)">
+          <i class="fa fa-pencil"></i></button
+        ><button class="btn btn-danger"  (click)="deleteTodo(task.id)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

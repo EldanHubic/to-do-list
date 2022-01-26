@@ -18,7 +18,9 @@ import { ConvertDashToSpacePipe } from './tasks/convert-dash-to-space.pipe';
 @NgModule({
   declarations: [AppComponent, HomeComponent, HeaderComponent, FooterComponent, ContentComponent, AddTaskComponent, TasksComponent, ConvertDashToSpacePipe],
   imports: [BrowserModule, HttpClientModule, FormsModule, RouterModule.forRoot([
-    {path: 'home', component: HomeComponent},
+    {path: 'tasks', component: HomeComponent},
+    {path: 'tasks/:id', component: HomeComponent},
+    {path: 'home', component: HomeComponent},   
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '**', component: HomeComponent}
   ])],

@@ -10,7 +10,6 @@ import { ITask } from '../tasks/itask';
 export class ContentComponent implements OnInit {
   constructor(private crudHttpService: CrudHttpService) {}
   tasks: ITask[] = [];
-  filterArray: ITask[] = [];
   sub!: Subscription;
   errorMessage: string = '';
   // _search: string = '';
@@ -33,7 +32,6 @@ export class ContentComponent implements OnInit {
     this.sub = this.crudHttpService.getTasks().subscribe({
       next: (task) => {
         this.tasks = task;
-        this.filterArray = task;
       },
       error: (err) => (this.errorMessage = err),
     });
@@ -42,6 +40,9 @@ export class ContentComponent implements OnInit {
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
+
+
+  
 
 
   // filterTasks(value: string): ITask[] {

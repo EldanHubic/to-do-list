@@ -12,24 +12,35 @@ import { ITask } from './itask';
 export class TasksComponent implements OnInit {
   constructor(private crudHttpService: CrudHttpService) {}
   @Input() todo: ITask[] = [];
-  @Input() fArray: ITask[] = [];
   isComplete: boolean = false;
   sub!: Subscription;
   errorMessage = '';
+  status: string = '';
   @Input() search: string = '';
   
   
 
   ngOnInit(): void {
-      
+   
   }
-  
+
+  listTodos() {
+    this.sub = this.crudHttpService.getTasks().subscribe({
+      next: (task) => {
+        this.todo = task;
+      },
+      error: (err) => (this.errorMessage = err),
+    });
+  } 
   
   //obriši task
-  deleteTodo(tasks: ITask): void {
-    this.crudHttpService.deleteTodo(tasks).subscribe((data) => {
-      console.log(data);
-      window.location.reload();
+  deleteTodo(id: number): void {
+    this.crudHttpService.deleteTodo(id).subscribe((data) => {
+      this.todo.splice(id, 1);
+      this.status = "Delete successful";
+      console.log(this.status);
+      
+      this.listTodos();
     });
   }
 
