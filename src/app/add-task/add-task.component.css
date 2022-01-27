@@ -1,9 +1,11 @@
 .input-group{
     width: 500px;
+    height: 50px;
 }
 
 .btn-warning {
-    margin-bottom: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     background: #035E7B;
     color: white;
     border: 1px;

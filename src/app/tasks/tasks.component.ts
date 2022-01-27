@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { CrudHttpService } from '../crud-http.service';
 import { ITask } from './itask';
 
@@ -39,9 +39,7 @@ export class TasksComponent implements OnInit {
     // console.log(this.filterArray);
     // console.log(this._search);
     // console.log(this.todo);
-    
   }
-
 
   set deadline(value: string) {
     this.newDeadline = value;
@@ -49,19 +47,17 @@ export class TasksComponent implements OnInit {
 
   isClicked: boolean = false;
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   //obriši task
   deleteTodo(id: number): void {
     this.crudHttpService.deleteTodo(id).subscribe((data) => {
       const index = this.todo.findIndex((el) => el.id === id);
       if (id > -1) {
-        this.filterArray.splice(index, 1);
         this.todo.splice(index, 1);
-        
+        // this.filterArray.splice(index, 1);
       }
+      
     });
   }
 
@@ -97,9 +93,8 @@ export class TasksComponent implements OnInit {
         if (this.selectedTask.id > -1) {
           this.filterArray.splice(index, 1, newTask);
           this.todo.splice(index, 1, newTask);
-          
+
           this.newText = '';
-         
         }
         this.selectedTask = {
           id: 0,
@@ -134,18 +129,17 @@ export class TasksComponent implements OnInit {
       done: task.done ? false : true,
       deadline: task.deadline,
     };
-    if(task.done) {
+    if (task.done) {
       task.done = false;
     } else {
       task.done = true;
     }
-    this.crudHttpService.updateTask(task.id,selectedTask).subscribe(()=> {
-
-    },
-    (error)=> {})
+    this.crudHttpService.updateTask(task.id, selectedTask).subscribe(
+      () => {},
+      (error) => {}
+    );
     // console.log(task.done);
     // console.log(selectedTask);
-    
   }
 
   filterTasks(value: string): ITask[] {
@@ -153,7 +147,6 @@ export class TasksComponent implements OnInit {
     return this.todo.filter((task: ITask) =>
       task.text.toLocaleLowerCase().includes(value)
     );
-  
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

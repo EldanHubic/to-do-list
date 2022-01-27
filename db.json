@@ -1,25 +1,11 @@
 {
   "tasks": [
     {
-      "id": 10,
-      "text": "hhh",
-      "date": "27.01.2022",
-      "done": true,
-      "deadline": "03.02.2022"
-    },
-    {
-      "id": 11,
-      "text": "cccc",
-      "date": "27.01.2022",
-      "done": true,
-      "deadline": "06.02.2022"
-    },
-    {
-      "id": 12,
-      "text": "tttt",
+      "text": "adasda",
       "date": "27.01.2022",
       "done": false,
-      "deadline": "30.01.2022"
+      "deadline": "28.01.2022",
+      "id": 10
     }
   ]
 }
