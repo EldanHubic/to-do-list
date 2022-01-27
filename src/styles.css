@@ -3,6 +3,11 @@
 @import "~font-awesome/css/font-awesome.min.css";
 
 
+body {
+    background-color: #1E1E24;
+}
+
+
 .container {
     background-color: #E7E5DF;
     width: 1000px;
