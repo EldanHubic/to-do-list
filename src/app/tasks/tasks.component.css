@@ -1,3 +1,7 @@
+.table {
+  width: 103%;
+}
+
 .form-control {
     border-radius: 0;
 }
@@ -14,6 +18,38 @@
     display: flex;
     justify-content: end;
     border-bottom-width: 0;
+}
+
+.alert-danger {
+    padding: 6px;
+    color: red;
+    font-weight: 900;
+  
+}
+
+
+/* .closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  
+  .closebtn:hover {
+    color: white;
+  } */
+
+
+
+.alert-primary {
+padding: 6px;
+color: blue;
+font-weight: 900;
 }
 
 .btn-primary {

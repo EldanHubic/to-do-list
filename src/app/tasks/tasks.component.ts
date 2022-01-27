@@ -19,6 +19,9 @@ export class TasksComponent implements OnInit {
   status: string = '';
   newText = '';
   newDeadline = '';
+  isDeletedFlag: boolean = false;
+  isEditedFlag: boolean = false;
+  display: string = 'none';
   private _search: string = '';
   selectedTask: ITask = {
     id: 0,
@@ -49,13 +52,27 @@ export class TasksComponent implements OnInit {
 
   ngOnInit(): void {}
 
+
+  FadeOutLink() :void{
+    setTimeout( () => {
+          this.isDeletedFlag = false;
+          this.isEditedFlag = false;
+        }, 3500);
+   }
   //obriši task
-  deleteTodo(id: number): void {
+  deleteTodo(id: number, taskText: string): void {
     this.crudHttpService.deleteTodo(id).subscribe((data) => {
       const index = this.todo.findIndex((el) => el.id === id);
       if (id > -1) {
-        this.todo.splice(index, 1);
-        // this.filterArray.splice(index, 1);
+        let isDeleted = this.todo.splice(index, 1); 
+        if(isDeleted) {
+          console.log(this.status = `Task: ${taskText.toUpperCase()} deleted.`);
+         this.isDeletedFlag = true;
+         this.isEditedFlag = false;
+         this.FadeOutLink();
+        } else {
+          
+        }
       }
       
     });
@@ -93,8 +110,11 @@ export class TasksComponent implements OnInit {
         if (this.selectedTask.id > -1) {
           this.filterArray.splice(index, 1, newTask);
           this.todo.splice(index, 1, newTask);
-
           this.newText = '';
+          this.isEditedFlag = true;
+          this.isDeletedFlag = false;
+          this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`
+          this.FadeOutLink();
         }
         this.selectedTask = {
           id: 0,

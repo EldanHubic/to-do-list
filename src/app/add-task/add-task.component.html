@@ -9,9 +9,10 @@
       [(ngModel)]="_text"
       minlength="1"
       maxlength="60"
+      required
     />
   </div>
-  <form name="datepickerForm" class="form-inline" role="form">
+  <form name="datepickerForm" class="form-inline deadline-picker" role="form">
     <div
       class="form-group"
       ng-class="{ 'has-error': datepickerForm.date2.$invalid }"
@@ -20,6 +21,7 @@
         ><i class="fa fa-calendar"></i> Deadline</label
       >
       <input
+        id="deadline-picker"
         [(ngModel)]="deadline"
         value="30-11-2020"
         type="date"
@@ -30,12 +32,19 @@
         data-autoclose="1"
         name="date2"
         bs-datepicker
+        required
       />
     </div>
     <button type="button" class="btn btn-warning" (click)="addTodo()">
       <i class="fa fa-plus-circle"></i>Add task
     </button>
   </form>
-
-  <hr />
+  <div class="row">
+    <div class="col">
+      <div *ngIf="isAdded" class="alert alert-success" role="alert">
+        {{ status }}
+      </div>
+    </div>
+  </div>
+  <hr style="margin-bottom: 30px" />
 </div>

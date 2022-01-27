@@ -1,107 +1,138 @@
-<div class="input-group mb-4" style="width: 300px">
-  <span class="input-group-text" id="inputGroup-sizing-default"
-    ><i class="fa fa-search"></i
-  ></span>
-  <input
-    type="text"
-    class="form-control"
-    placeholder="Search task.."
-    aria-label="Sizing example input"
-    aria-describedby="inputGroup-sizing-default"
-    [(ngModel)]="search"
-  />
+<div class="row">
+  <div class="col">
+    <div class="input-group mb-4" style="width: 300px">
+      <span class="input-group-text" id="inputGroup-sizing-default"
+        ><i class="fa fa-search"></i
+      ></span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search task.."
+        aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-default"
+        [(ngModel)]="search"
+      />
+    </div>
+  </div>
+  <div class="col">
+    <div *ngIf="isDeletedFlag" class="alert alert-danger" role="alert">
+      <!-- <span class="closebtn" onclick="this.parentElement.style.display='none'";>&times;</span> -->
+      {{ status }}
+    </div>
+    <div *ngIf="isEditedFlag" class="alert alert-primary" role="alert">
+      {{ status }}
+    </div>
+  </div>
 </div>
 
-<table class="table table-borderless">
-  <thead>
-    <tr>
-      <!-- <th scope="col">ID</th> -->
-      <th score="col">ID</th>
-      <th scope="col">Text</th>
-      <th scope="col">Task added</th>
-      <th scope="col">Status</th>
-      <th scope="col">Deadline</th>
-      <th scope="col">Toggle</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="table-row" *ngFor="let task of filterArray">
-      <th class="table-data" scope="row">{{ task.id }}.</th>
-      <td class="table-data">
-        <input
-          class="form-control"
-          *ngIf="selectedTask.id === task.id"
-          type="text"
-          placeholder="{{ task.text }}"
-          [(ngModel)]="newText"
-        />
-        <b *ngIf="!isClicked">{{ task.text }}</b>
-      </td>
-      <td class="table-data" style="color: green">
-        <b>{{ task.date | convertDashToSpace: "-" }}</b>
-      </td>
-      <td class="table-data">
-        <b *ngIf="!task.done"
-          ><i class="fa fa-times fa-lg" style="color: red"></i
-        ></b>
-        <b *ngIf="task.done"
-          ><i class="fa fa-check fa-lg" style="color: green"></i
-        ></b>
-      </td>
-      <td class="table-data" style="color: red">
-        <input
-          *ngIf="selectedTask.id === task.id"
-          [(ngModel)]="newDeadline"
-          value="30-11-2020"
-          type="date"
-          class="form-control"
-          data-date-format="dd-MM-yyyy"
-          data-date-type="number"
-          data-min-date="today"
-          data-autoclose="1"
-          name="date2"
-          bs-datepicker
-        />
-        <b>{{ task.deadline }}</b>
-      </td>
-      <td class="table-data" style="padding-top: 18px">
-        <i *ngIf="!task.done" class="fa fa-toggle-off fa-lg" (click)="checkDoneTask(task)"></i>
-        <i *ngIf="task.done" class="fa fa-toggle-on fa-lg" (click)="checkDoneTask(task)"></i>
-      </td>
-      <td id="buttons">
-        <div *ngIf="selectedTask.id === task.id">
-          <button
-            *ngIf="isClicked"
-            class="btn btn-success"
-            (click)="updateTodo(task)"
-          >
-            <i class="fa fa-pencil"></i>
-          </button>
-        </div>
-        <button
-          *ngIf="!isClicked"
-          class="btn btn-primary"
-          (click)="showHideEdit(task)"
-        >
-          <i class="fa fa-pencil"></i>
-        </button>
+<div class="row">
+  <div class="col">
+    <!--tabela taskova-->
+    <table class="table table-borderless">
+      <thead>
+        <tr>
+          <!-- <th scope="col">ID</th> -->
+          <th score="col">ID</th>
+          <th scope="col">Text</th>
+          <th scope="col">Task added</th>
+          <th scope="col">Status</th>
+          <th scope="col">Deadline</th>
+          <th scope="col">Toggle</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-row" *ngFor="let task of filterArray">
+          <th class="table-data" scope="row">{{ task.id }}.</th>
+          <td class="table-data">
+            <input
+              class="form-control"
+              *ngIf="selectedTask.id === task.id"
+              type="text"
+              placeholder="{{ task.text }}"
+              [(ngModel)]="newText"
+              required
+            />
+            <b *ngIf="!isClicked">{{ task.text }}</b>
+          </td>
+          <td class="table-data" style="color: green">
+            <b>{{ task.date | convertDashToSpace: "-" }}</b>
+          </td>
+          <td class="table-data">
+            <b *ngIf="!task.done"
+              ><i class="fa fa-times fa-lg" style="color: red"></i
+            ></b>
+            <b *ngIf="task.done"
+              ><i class="fa fa-check fa-lg" style="color: green"></i
+            ></b>
+          </td>
+          <td class="table-data" style="color: red">
+            <input
+              *ngIf="selectedTask.id === task.id"
+              [(ngModel)]="newDeadline"
+              value="30-11-2020"
+              type="date"
+              class="form-control"
+              data-date-format="dd-MM-yyyy"
+              data-date-type="number"
+              data-min-date="today"
+              data-autoclose="1"
+              name="date2"
+              bs-datepicker
+            />
+            <b>{{ task.deadline }}</b>
+          </td>
+          <td class="table-data" style="padding-top: 18px">
+            <i
+              *ngIf="!task.done"
+              class="fa fa-toggle-off fa-lg"
+              (click)="checkDoneTask(task)"
+            ></i>
+            <i
+              *ngIf="task.done"
+              class="fa fa-toggle-on fa-lg"
+              (click)="checkDoneTask(task)"
+            ></i>
+          </td>
+          <td id="buttons">
+            <div *ngIf="selectedTask.id === task.id">
+              <button
+                *ngIf="isClicked"
+                class="btn btn-success"
+                (click)="updateTodo(task)"
+              >
+                <i class="fa fa-pencil"></i>
+              </button>
+            </div>
+            <button
+              *ngIf="!isClicked"
+              class="btn btn-primary"
+              (click)="showHideEdit(task)"
+            >
+              <i class="fa fa-pencil"></i>
+            </button>
 
-        <button
-          *ngIf="!isClicked"
-          class="btn btn-danger"
-          (click)="deleteTodo(task.id)"
-        >
-          <i class="fa fa-trash"></i>
-        </button>
+            <button
+              *ngIf="!isClicked"
+              class="btn btn-danger"
+              (click)="deleteTodo(task.id, task.text)"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
 
-        <div *ngIf="selectedTask.id === task.id">
-          <button *ngIf="isClicked" class="btn btn-danger" (click)="cancel()">
-            <i class="fa fa-ban"></i>
-          </button>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+            <div *ngIf="selectedTask.id === task.id">
+              <button
+                *ngIf="isClicked"
+                class="btn btn-danger"
+                (click)="cancel()"
+              >
+                <i class="fa fa-ban"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -13,9 +13,11 @@ import { format} from 'date-fns';
 export class AddTaskComponent implements OnInit {
   constructor(private crudHttpService: CrudHttpService) {}
   sub!: Subscription;
+  status: string = '';
   errorMessage: string = '';
   _text: string = '';
   _deadline: string = '';
+  isAdded: boolean = false;
   @Input() todo: ITask[] = [];
   id!: number;
 
@@ -31,6 +33,12 @@ export class AddTaskComponent implements OnInit {
  
   }
 
+  FadeOutLink() :void{
+    setTimeout( () => {
+          this.isAdded = false;
+        }, 3500);
+   }
+
   addTodo(): void {
     const currentDate = format(new Date(), 'dd.MM.yyyy');
     let newDeadline: string[] = this.deadline.split('-');
@@ -45,6 +53,9 @@ export class AddTaskComponent implements OnInit {
     this.sub = this.crudHttpService.addTodo(task).subscribe((data) => {
       this.todo.push(data);
       this._text = '';
+      this.status = `Task: ${task.text} successfuly added to list.`;
+      this.isAdded = true;
+      this.FadeOutLink();
     });
   }
 
