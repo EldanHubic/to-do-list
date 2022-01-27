@@ -38,7 +38,9 @@ export class TasksComponent implements OnInit {
 
   set search(searchParam: string) {
     this._search = searchParam;
+
     this.filterArray = this.filterTasks(searchParam);
+ 
     // console.log(this.filterArray);
     // console.log(this._search);
     // console.log(this.todo);
@@ -61,14 +63,13 @@ export class TasksComponent implements OnInit {
   //obriši task
   deleteTodo(id: number, taskText: string): void {
     this.crudHttpService.deleteTodo(id).subscribe((data) => {
-      const index = this.filterArray.findIndex((el) => el.id === id);
+      const index = this.todo.findIndex((el) => el.id === id);
       if (id > -1) {
         let isDeleted = this.filterArray.splice(index, 1);
-        // this.todo.splice(index,1);
+        
         if (isDeleted) {
-          console.log(
-            (this.status = `Task: ${taskText.toUpperCase()} deleted.`)
-          );
+          this.status = `Task: ${taskText.toUpperCase()} deleted.`;
+          
           this.isDeletedFlag = true;
           this.isEditedFlag = false;
           this.FadeOutLink();
@@ -77,6 +78,9 @@ export class TasksComponent implements OnInit {
       }
     });
   }
+
+  //izbriši sve taskove
+  
 
   //update task
   showHideEdit(task: ITask): void {

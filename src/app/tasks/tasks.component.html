@@ -13,6 +13,7 @@
         [(ngModel)]="search"
       />
     </div>
+
   </div>
   <div class="col">
     <div *ngIf="isDeletedFlag" class="alert alert-danger" role="alert">
@@ -54,7 +55,7 @@
               [(ngModel)]="newText"
               required
             />
-            <b *ngIf="!isClicked">{{ task.text | uppercase }}</b>
+            <b *ngIf="!isClicked">{{ task.text }}</b>
           </td>
           <td class="table-data" style="color: green">
             <b>{{ task.date | convertDashToSpace: "-" }}</b>
