@@ -52,29 +52,29 @@ export class TasksComponent implements OnInit {
 
   ngOnInit(): void {}
 
-
-  FadeOutLink() :void{
-    setTimeout( () => {
-          this.isDeletedFlag = false;
-          this.isEditedFlag = false;
-        }, 3500);
-   }
+  FadeOutLink(): void {
+    setTimeout(() => {
+      this.isDeletedFlag = false;
+      this.isEditedFlag = false;
+    }, 3500);
+  }
   //obriši task
   deleteTodo(id: number, taskText: string): void {
     this.crudHttpService.deleteTodo(id).subscribe((data) => {
-      const index = this.todo.findIndex((el) => el.id === id);
+      const index = this.filterArray.findIndex((el) => el.id === id);
       if (id > -1) {
-        let isDeleted = this.todo.splice(index, 1); 
-        if(isDeleted) {
-          console.log(this.status = `Task: ${taskText.toUpperCase()} deleted.`);
-         this.isDeletedFlag = true;
-         this.isEditedFlag = false;
-         this.FadeOutLink();
+        let isDeleted = this.filterArray.splice(index, 1);
+        // this.todo.splice(index,1);
+        if (isDeleted) {
+          console.log(
+            (this.status = `Task: ${taskText.toUpperCase()} deleted.`)
+          );
+          this.isDeletedFlag = true;
+          this.isEditedFlag = false;
+          this.FadeOutLink();
         } else {
-          
         }
       }
-      
     });
   }
 
@@ -113,7 +113,7 @@ export class TasksComponent implements OnInit {
           this.newText = '';
           this.isEditedFlag = true;
           this.isDeletedFlag = false;
-          this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`
+          this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`;
           this.FadeOutLink();
         }
         this.selectedTask = {

@@ -26,7 +26,6 @@ export class ContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.listTodos();
-    
   }
 
   //ispiši sve todo

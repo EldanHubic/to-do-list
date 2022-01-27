@@ -54,7 +54,7 @@
               [(ngModel)]="newText"
               required
             />
-            <b *ngIf="!isClicked">{{ task.text }}</b>
+            <b *ngIf="!isClicked">{{ task.text | uppercase }}</b>
           </td>
           <td class="table-data" style="color: green">
             <b>{{ task.date | convertDashToSpace: "-" }}</b>
