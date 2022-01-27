@@ -1,4 +1,4 @@
-<div class="input-group mb-4"  style="width: 300px">
+<div class="input-group mb-4" style="width: 300px">
   <span class="input-group-text" id="inputGroup-sizing-default"
     ><i class="fa fa-search"></i
   ></span>
@@ -8,7 +8,7 @@
     placeholder="Search task.."
     aria-label="Sizing example input"
     aria-describedby="inputGroup-sizing-default"
-    [(ngModel)] = "search"
+    [(ngModel)]="search"
   />
 </div>
 
@@ -19,8 +19,9 @@
       <th score="col">ID</th>
       <th scope="col">Text</th>
       <th scope="col">Task added</th>
-      <th scope="col">Done ?</th>
+      <th scope="col">Status</th>
       <th scope="col">Deadline</th>
+      <th scope="col">Toggle</th>
       <th scope="col"></th>
       <th scope="col"></th>
     </tr>
@@ -42,9 +43,11 @@
         <b>{{ task.date | convertDashToSpace: "-" }}</b>
       </td>
       <td class="table-data">
-        <b *ngIf="!task.done"><i class="fa fa-times" style="color: red"></i></b>
+        <b *ngIf="!task.done"
+          ><i class="fa fa-times fa-lg" style="color: red"></i
+        ></b>
         <b *ngIf="task.done"
-          ><i class="fa fa-check" style="color: green"></i
+          ><i class="fa fa-check fa-lg" style="color: green"></i
         ></b>
       </td>
       <td class="table-data" style="color: red">
@@ -63,7 +66,10 @@
         />
         <b>{{ task.deadline }}</b>
       </td>
-      <td class="table-data" style="padding-top: 18px"></td>
+      <td class="table-data" style="padding-top: 18px">
+        <i *ngIf="!task.done" class="fa fa-toggle-off fa-lg" (click)="checkDoneTask(task)"></i>
+        <i *ngIf="task.done" class="fa fa-toggle-on fa-lg" (click)="checkDoneTask(task)"></i>
+      </td>
       <td id="buttons">
         <div *ngIf="selectedTask.id === task.id">
           <button

@@ -26,6 +26,7 @@ export class ContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.listTodos();
+    this.filterArray = [];
   }
 
   //ispiši sve todo

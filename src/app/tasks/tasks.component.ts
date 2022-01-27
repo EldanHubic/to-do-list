@@ -36,8 +36,10 @@ export class TasksComponent implements OnInit {
   set search(searchParam: string) {
     this._search = searchParam;
     this.filterArray = this.filterTasks(searchParam);
-    console.log(this.filterArray);
-    console.log(this._search);
+    // console.log(this.filterArray);
+    // console.log(this._search);
+    // console.log(this.todo);
+    
   }
 
 
@@ -47,14 +49,18 @@ export class TasksComponent implements OnInit {
 
   isClicked: boolean = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
 
   //obriši task
   deleteTodo(id: number): void {
     this.crudHttpService.deleteTodo(id).subscribe((data) => {
       const index = this.todo.findIndex((el) => el.id === id);
       if (id > -1) {
+        this.filterArray.splice(index, 1);
         this.todo.splice(index, 1);
+        
       }
     });
   }
@@ -68,9 +74,9 @@ export class TasksComponent implements OnInit {
       done: task.done,
       deadline: task.deadline,
     };
-    console.log(this.selectedTask);
+    // console.log(this.selectedTask);
     this.isClicked = true;
-    console.log(this.isClicked);
+    // console.log(this.isClicked);
   }
 
   updateTodo(task: ITask) {
@@ -89,8 +95,11 @@ export class TasksComponent implements OnInit {
           (el) => el.id === this.selectedTask.id
         );
         if (this.selectedTask.id > -1) {
+          this.filterArray.splice(index, 1, newTask);
           this.todo.splice(index, 1, newTask);
+          
           this.newText = '';
+         
         }
         this.selectedTask = {
           id: 0,
@@ -103,7 +112,7 @@ export class TasksComponent implements OnInit {
       (error) => {}
     );
     this.isClicked = false;
-    console.log(this.selectedTask);
+    // console.log(this.selectedTask);
   }
 
   cancel(): void {
@@ -117,9 +126,27 @@ export class TasksComponent implements OnInit {
     };
   }
 
-  // MyCtrl($scope: any, $filter: any) {
-  //   $scope.date = $filter('date')(Date.now(), 'yyyy-MM-dd');
-  // }
+  checkDoneTask(task: ITask): void {
+    let selectedTask = {
+      id: task.id,
+      text: task.text,
+      date: task.date,
+      done: task.done ? false : true,
+      deadline: task.deadline,
+    };
+    if(task.done) {
+      task.done = false;
+    } else {
+      task.done = true;
+    }
+    this.crudHttpService.updateTask(task.id,selectedTask).subscribe(()=> {
+
+    },
+    (error)=> {})
+    // console.log(task.done);
+    // console.log(selectedTask);
+    
+  }
 
   filterTasks(value: string): ITask[] {
     value.toLocaleLowerCase();

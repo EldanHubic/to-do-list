@@ -50,3 +50,11 @@
 .form-check-input{
     border: 1px solid #328ba8;
 }
+
+.fa-toggle-off:hover {
+    cursor: pointer;
+}
+
+.fa-toggle-on:hover {
+    cursor: pointer;
+}

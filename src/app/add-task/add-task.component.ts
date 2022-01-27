@@ -31,8 +31,6 @@ export class AddTaskComponent implements OnInit {
  
   }
 
-
-
   addTodo(): void {
     const currentDate = format(new Date(), 'dd.MM.yyyy');
     let newDeadline: string[] = this.deadline.split('-');
