@@ -1,46 +1,32 @@
 {
   "tasks": [
     {
-      "id": 5,
-      "text": "aaa",
-      "date": "28.01.2022",
-      "done": false,
-      "deadline": "05.02.2022"
-    },
-    {
-      "id": 10,
-      "text": "jajaja",
+      "id": 1,
+      "text": "Ići na trčanje",
       "date": "28.01.2022",
       "done": false,
       "deadline": "29.01.2022"
     },
     {
-      "text": "sfsf",
+      "id": 2,
+      "text": "Ići u teretanu",
       "date": "28.01.2022",
-      "done": false,
-      "deadline": "20.01.2022",
-      "id": 11
+      "done": true,
+      "deadline": "28.01.2022"
     },
     {
-      "text": "jiji",
+      "text": "Doći na posao",
       "date": "28.01.2022",
       "done": false,
-      "deadline": "27.01.2022",
-      "id": 12
+      "deadline": "31.01.2022",
+      "id": 3
     },
     {
-      "text": "asdasd",
+      "text": "Uraditi task1 i task2",
       "date": "28.01.2022",
       "done": false,
       "deadline": "06.02.2022",
-      "id": 13
-    },
-    {
-      "text": "asdasd",
-      "date": "28.01.2022",
-      "done": false,
-      "deadline": "28.01.2022",
-      "id": 14
+      "id": 4
     }
   ]
 }

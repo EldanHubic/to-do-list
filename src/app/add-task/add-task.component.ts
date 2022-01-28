@@ -22,6 +22,7 @@ export class AddTaskComponent implements OnInit {
   _deadline: string = '';
   isAdded: boolean = false;
   addFail: boolean = false;
+  deadlineMsg: string = 'Deadline date already passed!';
   @Input() todo: ITask[] = [];
   @Input() filterArray: ITask[] = [];
   id!: number;
@@ -40,6 +41,7 @@ export class AddTaskComponent implements OnInit {
   FadeOutLink(): void {
     setTimeout(() => {
       this.isAdded = false;
+      this.addFail = false;
     }, 3500);
   }
 
@@ -79,16 +81,19 @@ export class AddTaskComponent implements OnInit {
             this.FadeOutLink();
           });
         } else {
-          this.status = 'Unešeni datum za deadline je prošao!';
+          this.status = this.deadlineMsg;
           this.addFail = true;
+          this.FadeOutLink();
         }
       } else {
-        this.status = 'Unešeni datum za deadline je prošao!';
+        this.status = this.deadlineMsg;
         this.addFail = true;
+        this.FadeOutLink();
       }
     } else {
-      this.status = 'Unešeni datum za deadline je prošao!';
+      this.status = this.deadlineMsg;
       this.addFail = true;
+      this.FadeOutLink();
     }
 
     // if((newDeadline[0] > arr[2]) && (newDeadline[1]>=arr[1]) && (newDeadline[1]>=arr[1])) {
