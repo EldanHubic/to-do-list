@@ -16,12 +16,24 @@
   </div>
   <div class="col">
     <div *ngIf="isDeletedFlag" class="alert alert-danger" role="alert">
-      <!-- <span class="closebtn" onclick="this.parentElement.style.display='none'";>&times;</span> -->
+      <span class="closebtn" onclick="this.parentElement.style.display='none'"
+        >&times;</span
+      >
+      {{ status }}
+    </div>
+    <div *ngIf="notDeleted || addFail" class="alert alert-danger" role="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none'"
+        >&times;</span
+      >
       {{ status }}
     </div>
     <div *ngIf="isEditedFlag" class="alert alert-primary" role="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none'"
+        >&times;</span
+      >
       {{ status }}
     </div>
+   
   </div>
 </div>
 
@@ -140,9 +152,9 @@
             </button>
 
             <button
-              *ngIf="!isClicked && task.done  "
+              *ngIf="!isClicked"
               class="btn btn-danger"
-              (click)="deleteTodo(task.id, task.text)"
+              (click)="deleteTodo(task)"
             >
               <i class="fa fa-trash"></i>
             </button>

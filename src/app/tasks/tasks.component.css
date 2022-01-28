@@ -24,7 +24,12 @@
     padding: 6px;
     color: red;
     font-weight: 900;
-  
+}
+
+.alert-success {
+  padding: 6px;
+  color: green;
+  font-weight: 900;
 }
 
 

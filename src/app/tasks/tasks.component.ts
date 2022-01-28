@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CrudHttpService } from '../crud-http.service';
 import { ITask } from './itask';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-tasks',
@@ -19,10 +19,13 @@ export class TasksComponent implements OnInit {
   status: string = '';
   newText = '';
   newDeadline = '';
+  deadlineMsg: string = 'Deadline date already passed!';
+  addFail: boolean = false;
   isDeletedFlag: boolean = false;
   isEditedFlag: boolean = false;
   display: string = 'none';
   private _search: string = '';
+  notDeleted: boolean = false;
   selectedTask: ITask = {
     id: 0,
     text: '',
@@ -45,7 +48,6 @@ export class TasksComponent implements OnInit {
 
     console.log(this.filterArray);
     console.log(this._search);
- 
   }
 
   set deadline(value: string) {
@@ -56,32 +58,43 @@ export class TasksComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  FadeOutLink(): void {
-    setTimeout(() => {
-      this.isDeletedFlag = false;
-      this.isEditedFlag = false;
-    }, 3500);
-  }
+  // FadeOutLink(): void {
+  //   setTimeout(() => {
+  //     this.isDeletedFlag = false;
+  //     this.isEditedFlag = false;
+  //   }, 3500);
+  // }
   //obriši task
-  deleteTodo(id: number, taskText: string): void {
-    this.crudHttpService.deleteTodo(id).subscribe((data) => {
-      const filteredIndex = this.filterArray.findIndex((el) => el.id === id);
+  deleteTodo(task: ITask): void {
+    if (task.done) {
+      this.crudHttpService.deleteTodo(task.id).subscribe((data) => {
+        const filteredIndex = this.filterArray.findIndex(
+          (el) => el.id === task.id
+        );
 
-      if (filteredIndex > -1) {
-        this.filterArray.splice(filteredIndex, 1);
-        this.status = `Task: ${taskText.toUpperCase()} deleted.`;
-      }
-      const todoIndex = this.todo.findIndex((el) => el.id === id);
+        if (filteredIndex > -1) {
+          this.filterArray.splice(filteredIndex, 1);
+          this.status = `Task: ${task.text.toUpperCase()} deleted!`;
+        }
+        const todoIndex = this.todo.findIndex((el) => el.id === task.id);
 
-      if (todoIndex > -1) {
-        this.todo.splice(todoIndex, 1);
-        this.status = `Task: ${taskText.toUpperCase()} deleted.`;
-      }
+        if (todoIndex > -1) {
+          this.todo.splice(todoIndex, 1);
+          this.status = `Task: ${task.text.toUpperCase()} deleted!`;
+        }
 
-      this.isDeletedFlag = true;
-      this.isEditedFlag = false;
-      this.FadeOutLink();
-    });
+        this.isDeletedFlag = true;
+        setTimeout(() => {
+          this.isDeletedFlag = false;
+        }, 3500);
+      });
+    } else {
+      this.status = `Can't delete task that is not complete!`;
+      this.notDeleted = true;
+      setTimeout(() => {
+        this.notDeleted = false;
+      }, 3500);
+    }
   }
 
   //izbriši sve taskove
@@ -101,50 +114,89 @@ export class TasksComponent implements OnInit {
   }
 
   updateTodo(task: ITask) {
+    const currentDate = format(new Date(), 'dd.MM.yyyy');
     let _newDeadline = this.newDeadline.split('-');
     this.newDeadline = `${_newDeadline[2]}.${_newDeadline[1]}.${_newDeadline[0]}`;
-    let newTask = {
-      id: task.id,
-      text: this.newText,
-      date: task.date,
-      done: task.done,
-      deadline: this.newDeadline,
-    };
-    this.sub = this.crudHttpService.updateTask(task.id, newTask).subscribe(
-      () => {
-        const filteredIndex = this.filterArray.findIndex(
-          (el) => el.id === this.selectedTask.id
-        );
+    let arr = currentDate.split('.');
+    if (_newDeadline[0] >= arr[2]) {
+      console.log('unesena godina veca ili jednaka nego trenutna');
 
-        if (filteredIndex > -1) {
-          this.filterArray.splice(filteredIndex, 1, newTask);
-          this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`;
-          this.newText = '';
-          this.isEditedFlag = true;
-          this.isDeletedFlag = false;
-        }
-        const todoIndex = this.todo.findIndex(
-          (el) => el.id === this.selectedTask.id
-        );
+      if (_newDeadline[1] >= arr[1]) {
+        console.log('uneseni mjesec veci ili jednak nego trenutni');
+        if (
+          (Number(_newDeadline[2]) >= Number(arr[0]) &&
+            Number(_newDeadline[1]) === Number(arr[1])) ||
+          (Number(_newDeadline[2]) <= Number(arr[0]) &&
+            Number(_newDeadline[1]) > Number(arr[1]))
+        ) {
+          let newTask = {
+            id: task.id,
+            text: this.newText,
+            date: task.date,
+            done: task.done,
+            deadline: this.newDeadline,
+          };
+          this.sub = this.crudHttpService
+            .updateTask(task.id, newTask)
+            .subscribe(
+              () => {
+                const filteredIndex = this.filterArray.findIndex(
+                  (el) => el.id === this.selectedTask.id
+                );
 
-        if (todoIndex > -1) {
-          this.todo.splice(todoIndex, 1, newTask);
-          this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`;
-          this.newText = '';
-          this.isEditedFlag = true;
-          this.isDeletedFlag = false;
+                if (filteredIndex > -1) {
+                  this.filterArray.splice(filteredIndex, 1, newTask);
+                  this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`;
+                  this.newText = '';
+                  this.isEditedFlag = true;
+                  this.isDeletedFlag = false;
+                }
+                const todoIndex = this.todo.findIndex(
+                  (el) => el.id === this.selectedTask.id
+                );
+
+                if (todoIndex > -1) {
+                  this.todo.splice(todoIndex, 1, newTask);
+                  this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`;
+                  this.newText = '';
+                  this.isEditedFlag = true;
+                  setTimeout(() => {
+                    this.isEditedFlag = false;
+                  }, 3500);
+                }
+                this.selectedTask = {
+                  id: 0,
+                  text: '',
+                  date: '',
+                  done: false,
+                  deadline: '',
+                };
+              },
+              (error) => {}
+            );
+          this.isClicked = false;
+        } else {
+          this.status = this.deadlineMsg;
+          this.addFail = true;
+          setTimeout(()=> {
+            this.addFail = false;
+          }, 3500)
         }
-        this.selectedTask = {
-          id: 0,
-          text: '',
-          date: '',
-          done: false,
-          deadline: '',
-        };
-      },
-      (error) => {}
-    );
-    this.isClicked = false;
+      } else {
+        this.status = this.deadlineMsg;
+        this.addFail = true;
+        setTimeout(()=> {
+          this.addFail = false;
+        }, 3500)
+      }
+    } else {
+      this.status = this.deadlineMsg;
+      this.addFail = true;
+      setTimeout(()=> {
+        this.addFail = false;
+      }, 3500)
+    }
+
     // console.log(this.selectedTask);
   }
 
@@ -171,7 +223,6 @@ export class TasksComponent implements OnInit {
       task.done = false;
     } else {
       task.done = true;
-      
     }
     this.crudHttpService.updateTask(task.id, selectedTask).subscribe(
       () => {},
