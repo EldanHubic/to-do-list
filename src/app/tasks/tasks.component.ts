@@ -38,12 +38,14 @@ export class TasksComponent implements OnInit {
 
   set search(searchParam: string) {
     this._search = searchParam;
-
+    if (searchParam === '') {
+      console.log('prazan');
+    }
     this.filterArray = this.filterTasks(searchParam);
+
+    console.log(this.filterArray);
+    console.log(this._search);
  
-    // console.log(this.filterArray);
-    // console.log(this._search);
-    // console.log(this.todo);
   }
 
   set deadline(value: string) {
@@ -63,24 +65,26 @@ export class TasksComponent implements OnInit {
   //obriši task
   deleteTodo(id: number, taskText: string): void {
     this.crudHttpService.deleteTodo(id).subscribe((data) => {
-      const index = this.todo.findIndex((el) => el.id === id);
-      if (id > -1) {
-        let isDeleted = this.filterArray.splice(index, 1);
-        
-        if (isDeleted) {
-          this.status = `Task: ${taskText.toUpperCase()} deleted.`;
-          
-          this.isDeletedFlag = true;
-          this.isEditedFlag = false;
-          this.FadeOutLink();
-        } else {
-        }
+      const filteredIndex = this.filterArray.findIndex((el) => el.id === id);
+
+      if (filteredIndex > -1) {
+        this.filterArray.splice(filteredIndex, 1);
+        this.status = `Task: ${taskText.toUpperCase()} deleted.`;
       }
+      const todoIndex = this.todo.findIndex((el) => el.id === id);
+
+      if (todoIndex > -1) {
+        this.todo.splice(todoIndex, 1);
+        this.status = `Task: ${taskText.toUpperCase()} deleted.`;
+      }
+
+      this.isDeletedFlag = true;
+      this.isEditedFlag = false;
+      this.FadeOutLink();
     });
   }
 
   //izbriši sve taskove
-  
 
   //update task
   showHideEdit(task: ITask): void {
@@ -108,17 +112,27 @@ export class TasksComponent implements OnInit {
     };
     this.sub = this.crudHttpService.updateTask(task.id, newTask).subscribe(
       () => {
-        const index = this.todo.findIndex(
+        const filteredIndex = this.filterArray.findIndex(
           (el) => el.id === this.selectedTask.id
         );
-        if (this.selectedTask.id > -1) {
-          this.filterArray.splice(index, 1, newTask);
-          this.todo.splice(index, 1, newTask);
+
+        if (filteredIndex > -1) {
+          this.filterArray.splice(filteredIndex, 1, newTask);
+          this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`;
           this.newText = '';
           this.isEditedFlag = true;
           this.isDeletedFlag = false;
+        }
+        const todoIndex = this.todo.findIndex(
+          (el) => el.id === this.selectedTask.id
+        );
+
+        if (todoIndex > -1) {
+          this.todo.splice(todoIndex, 1, newTask);
           this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`;
-          this.FadeOutLink();
+          this.newText = '';
+          this.isEditedFlag = true;
+          this.isDeletedFlag = false;
         }
         this.selectedTask = {
           id: 0,
@@ -157,6 +171,7 @@ export class TasksComponent implements OnInit {
       task.done = false;
     } else {
       task.done = true;
+      
     }
     this.crudHttpService.updateTask(task.id, selectedTask).subscribe(
       () => {},

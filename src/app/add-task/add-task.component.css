@@ -31,3 +31,11 @@
     margin-top: 13px;
     margin-bottom: 0;
   }
+
+  .alert-danger{
+    color: red;
+    padding: 6px;
+    font-weight: 900;
+    margin-top: 13px;
+    margin-bottom: 0;
+  }

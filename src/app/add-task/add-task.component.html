@@ -35,13 +35,30 @@
         required
       />
     </div>
-    <button type="button" class="btn btn-warning" (click)="addTodo()">
-      <i class="fa fa-plus-circle"></i>Add task
-    </button>
   </form>
+  <!-- <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input [(ngModel)] ="deadline" matInput [matDatepicker]="picker" [min]="minDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker ></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div> -->
+  
+  
+  
+
+  <button type="button" class="btn btn-warning" (click)="addTodo()">
+    <i class="fa fa-plus-circle"></i>Add task
+  </button>
+
   <div class="row">
     <div class="col">
       <div *ngIf="isAdded" class="alert alert-success" role="alert">
+        {{ status }}
+      </div>
+      <div *ngIf="addFail" class="alert alert-danger" role="alert">
         {{ status }}
       </div>
     </div>

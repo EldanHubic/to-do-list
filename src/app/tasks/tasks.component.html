@@ -13,7 +13,6 @@
         [(ngModel)]="search"
       />
     </div>
-
   </div>
   <div class="col">
     <div *ngIf="isDeletedFlag" class="alert alert-danger" role="alert">
@@ -84,18 +83,44 @@
             />
             <b>{{ task.deadline }}</b>
           </td>
+
           <td class="table-data" style="padding-top: 18px">
+            <div *ngIf="selectedTask.id === task.id">
+              <i
+                *ngIf="!task.done && isClicked"
+                class="fa fa-toggle-off fa-lg"
+                (click)="checkDoneTask(task)"
+              >
+                <!-- <i class="fa fa-pencil"></i> -->
+              </i>
+            </div>
             <i
-              *ngIf="!task.done"
-              class="fa fa-toggle-off fa-lg"
-              (click)="checkDoneTask(task)"
-            ></i>
-            <i
-              *ngIf="task.done"
+              *ngIf="!isClicked && task.done"
               class="fa fa-toggle-on fa-lg"
               (click)="checkDoneTask(task)"
-            ></i>
+            >
+              <!-- <i class="fa fa-pencil"></i> -->
+            </i>
+
+            <i
+              *ngIf="!task.done && !isClicked"
+              class="fa fa-toggle-off fa-lg"
+              (click)="checkDoneTask(task)"
+            >
+              <!-- <i class="fa fa-pencil"></i> -->
+            </i>
+
+            <div *ngIf="selectedTask.id === task.id">
+              <i
+                *ngIf="isClicked && task.done"
+                class="fa fa-toggle-on fa-lg"
+                (click)="checkDoneTask(task)"
+              >
+                <!-- <i class="fa fa-pencil"></i> -->
+              </i>
+            </div>
           </td>
+
           <td id="buttons">
             <div *ngIf="selectedTask.id === task.id">
               <button
@@ -115,7 +140,7 @@
             </button>
 
             <button
-              *ngIf="!isClicked"
+              *ngIf="!isClicked && task.done  "
               class="btn btn-danger"
               (click)="deleteTodo(task.id, task.text)"
             >
