@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CrudHttpService } from '../crud-http.service';
 import { ITask } from './itask';
 import { format } from 'date-fns';
+import { DialogService } from '../services/dialog.service';
+
 
 @Component({
   selector: 'app-tasks',
@@ -10,7 +12,10 @@ import { format } from 'date-fns';
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
-  constructor(private crudHttpService: CrudHttpService) {}
+  constructor(
+    private crudHttpService: CrudHttpService,
+    private dialogService: DialogService
+  ) {}
   @Input() todo: ITask[] = [];
   @Input() filterArray: ITask[] = [];
   isComplete: boolean = false;
@@ -26,6 +31,7 @@ export class TasksComponent implements OnInit {
   display: string = 'none';
   private _search: string = '';
   notDeleted: boolean = false;
+  dialog: boolean = false;
   selectedTask: ITask = {
     id: 0,
     text: '',
@@ -41,9 +47,7 @@ export class TasksComponent implements OnInit {
 
   set search(searchParam: string) {
     this._search = searchParam;
-    if (searchParam === '') {
-      console.log('prazan');
-    }
+
     this.filterArray = this.filterTasks(searchParam);
 
     console.log(this.filterArray);
@@ -58,12 +62,14 @@ export class TasksComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // FadeOutLink(): void {
-  //   setTimeout(() => {
-  //     this.isDeletedFlag = false;
-  //     this.isEditedFlag = false;
-  //   }, 3500);
-  // }
+  confirm(task: ITask): void {
+    let confirmed = window.confirm("Do you really want to delete this task?");
+    if(confirmed) {
+      this.deleteTodo(task);
+    }
+  }
+
+  
   //obriši task
   deleteTodo(task: ITask): void {
     if (task.done) {
@@ -89,7 +95,7 @@ export class TasksComponent implements OnInit {
         }, 3500);
       });
     } else {
-      this.status = `Can't delete task that is not complete!`;
+      this.status = `Can't delete task that is not completed!`;
       this.notDeleted = true;
       setTimeout(() => {
         this.notDeleted = false;
@@ -119,10 +125,10 @@ export class TasksComponent implements OnInit {
     this.newDeadline = `${_newDeadline[2]}.${_newDeadline[1]}.${_newDeadline[0]}`;
     let arr = currentDate.split('.');
     if (_newDeadline[0] >= arr[2]) {
-      console.log('unesena godina veca ili jednaka nego trenutna');
+      // console.log('unesena godina veca ili jednaka nego trenutna');
 
       if (_newDeadline[1] >= arr[1]) {
-        console.log('uneseni mjesec veci ili jednak nego trenutni');
+        // console.log('uneseni mjesec veci ili jednak nego trenutni');
         if (
           (Number(_newDeadline[2]) >= Number(arr[0]) &&
             Number(_newDeadline[1]) === Number(arr[1])) ||
@@ -178,26 +184,24 @@ export class TasksComponent implements OnInit {
         } else {
           this.status = this.deadlineMsg;
           this.addFail = true;
-          setTimeout(()=> {
+          setTimeout(() => {
             this.addFail = false;
-          }, 3500)
+          }, 3500);
         }
       } else {
         this.status = this.deadlineMsg;
         this.addFail = true;
-        setTimeout(()=> {
+        setTimeout(() => {
           this.addFail = false;
-        }, 3500)
+        }, 3500);
       }
     } else {
       this.status = this.deadlineMsg;
       this.addFail = true;
-      setTimeout(()=> {
+      setTimeout(() => {
         this.addFail = false;
-      }, 3500)
+      }, 3500);
     }
-
-    // console.log(this.selectedTask);
   }
 
   cancel(): void {
@@ -228,8 +232,6 @@ export class TasksComponent implements OnInit {
       () => {},
       (error) => {}
     );
-    // console.log(task.done);
-    // console.log(selectedTask);
   }
 
   filterTasks(value: string): ITask[] {

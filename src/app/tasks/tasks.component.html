@@ -16,15 +16,10 @@
   </div>
   <div class="col">
     <div *ngIf="isDeletedFlag" class="alert alert-danger" role="alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none'"
-        >&times;</span
-      >
       {{ status }}
     </div>
     <div *ngIf="notDeleted || addFail" class="alert alert-danger" role="alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none'"
-        >&times;</span
-      >
+      <span>&times;</span>
       {{ status }}
     </div>
     <div *ngIf="isEditedFlag" class="alert alert-primary" role="alert">
@@ -33,7 +28,6 @@
       >
       {{ status }}
     </div>
-   
   </div>
 </div>
 
@@ -44,12 +38,12 @@
       <thead>
         <tr>
           <!-- <th scope="col">ID</th> -->
-          <th score="col">ID</th>
-          <th scope="col">Text</th>
-          <th scope="col">Task added</th>
+          <th score="col">No.</th>
+          <th scope="col">Task</th>
+          <th scope="col">Added on date</th>
           <th scope="col">Status</th>
           <th scope="col">Deadline</th>
-          <th scope="col">Toggle</th>
+          <th scope="col">Check</th>
           <th scope="col"></th>
           <th scope="col"></th>
         </tr>
@@ -66,10 +60,10 @@
               [(ngModel)]="newText"
               required
             />
-            <b *ngIf="!isClicked">{{ task.text }}</b>
+            <span *ngIf="!isClicked">{{ task.text }}</span>
           </td>
           <td class="table-data" style="color: green">
-            <b>{{ task.date | convertDashToSpace: "-" }}</b>
+            <span>{{ task.date | convertDashToSpace: "-" }}</span>
           </td>
           <td class="table-data">
             <b *ngIf="!task.done"
@@ -93,7 +87,7 @@
               name="date2"
               bs-datepicker
             />
-            <b>{{ task.deadline }}</b>
+            <span>{{ task.deadline }}</span>
           </td>
 
           <td class="table-data" style="padding-top: 18px">
@@ -153,8 +147,10 @@
 
             <button
               *ngIf="!isClicked"
+              data-toggle="modal"
+              data-target="#exampleModalCenter"
               class="btn btn-danger"
-              (click)="deleteTodo(task)"
+              (click)="confirm(task)"
             >
               <i class="fa fa-trash"></i>
             </button>

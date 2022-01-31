@@ -13,6 +13,8 @@ export class ContentComponent implements OnInit {
   filterArray: ITask[] = [];
   sub!: Subscription;
   errorMessage: string = '';
+  dialog: boolean = false;
+
   // _search: string = '';
   
   // get search() {
