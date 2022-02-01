@@ -3,9 +3,10 @@ import { Subscription } from 'rxjs';
 import { CrudHttpService } from '../crud-http.service';
 import { ITask } from './itask';
 import { format } from 'date-fns';
-import { DialogService } from '../services/dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../dialog/confirm/confirm.component';
+import { DialogService } from '../services/dialog.service';
+
 
 @Component({
   selector: 'app-tasks',
@@ -15,7 +16,9 @@ import { ConfirmComponent } from '../dialog/confirm/confirm.component';
 export class TasksComponent implements OnInit {
   constructor(
     private crudHttpService: CrudHttpService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private dialogService: DialogService
+   
   ) {}
   @Input() todo: ITask[] = [];
   @Input() filterArray: ITask[] = [];
@@ -59,30 +62,29 @@ export class TasksComponent implements OnInit {
     this.newDeadline = value;
   }
 
-
-
   ngOnInit(): void {}
 
-
-
   confirm(task: ITask): void {
+    // let matDialog = this.dialog.open(ConfirmComponent);
+    // matDialog.afterClosed().subscribe((result) => {
+    //   if (result.data === 'confirmed') {
+    //     this.deleteTodo(task);
+    //   }
+    // });
+    let dialog = this.dialogService.confirmDialog({
+      title: 'Please confirm',
+      message: 'Are you sure you want to do this?',
+      confirmButton: 'Delete',
+      cancelButton: 'Cancel',
+    });
 
-    let matDialog = this.dialog.open(ConfirmComponent);
-    matDialog.afterClosed().subscribe((result) => {
-      if(result.data === 'confirmed' ) {
+    dialog.subscribe((result) => {
+      if(result) {
         this.deleteTodo(task);
-      }      
+      }
       
     })
-
-   
   }
-
-  // confirm(task: ITask): void {
-  //   if (window.confirm('Are you sure yout want to delete this task?')) {
-  //     this.deleteTodo(task);
-  //   }
-  // }
 
   //obriši task
   deleteTodo(task: ITask): void {

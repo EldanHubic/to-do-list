@@ -1,30 +1,21 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { CrudHttpService } from 'src/app/crud-http.service';
-import { ITask } from 'src/app/tasks/itask';
-
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { IConfirmDialogData } from '../iconfirm-dialog-data';
 @Component({
   selector: 'app-confirm',
   templateUrl: './confirm.component.html',
-  styleUrls: ['./confirm.component.css']
+  styleUrls: ['./confirm.component.css'],
 })
 export class ConfirmComponent implements OnInit {
- 
-  constructor(private dialogRef: MatDialogRef<ConfirmComponent>) { }
- 
-  cancel() {
-    this.dialogRef.close({data: 'cancel'});
-  }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: IConfirmDialogData) {}
 
-  confirm() {
-    this.dialogRef.close({data: 'confirmed'});
-  }
+  // cancel() {
+  //   this.dialogRef.close({data: 'cancel'});
+  // }
 
-  ngOnInit(): void {
-  }
+  // confirm() {
+  //   this.dialogRef.close({data: 'confirmed'});
+  // }
 
-
-
-
- 
+  ngOnInit(): void {}
 }

@@ -1,13 +1,6 @@
 {
   "tasks": [
     {
-      "text": "task 1",
-      "date": "01.02.2022",
-      "done": false,
-      "deadline": "16.02.2022",
-      "id": 1
-    },
-    {
       "text": "task 2",
       "date": "01.02.2022",
       "done": false,
