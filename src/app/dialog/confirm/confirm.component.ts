@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { CrudHttpService } from 'src/app/crud-http.service';
 import { ITask } from 'src/app/tasks/itask';
 
@@ -8,16 +9,21 @@ import { ITask } from 'src/app/tasks/itask';
   styleUrls: ['./confirm.component.css']
 })
 export class ConfirmComponent implements OnInit {
-  @Input() todo: ITask[] = [];
-  @Input() filterArray: ITask[] = [];
-  constructor(private crudHttpService: CrudHttpService) { }
-  status: string = '';
-  isDeletedFlag: boolean = false;
-  notDeleted: boolean = false;
-  @Input() selectToDeleteTask?: ITask;
-  dialog: boolean = false;
+ 
+  constructor(private dialogRef: MatDialogRef<ConfirmComponent>) { }
+ 
+  cancel() {
+    this.dialogRef.close({data: 'cancel'});
+  }
+
+  confirm() {
+    this.dialogRef.close({data: 'confirmed'});
+  }
+
   ngOnInit(): void {
   }
+
+
 
 
  

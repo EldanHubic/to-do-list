@@ -11,6 +11,13 @@ export class DialogService {
   constructor(private dialog: MatDialog) { }
 
   confirmDialog(): void{
-    this.dialog.open(ConfirmComponent);
+  const dialogModal = this.dialog.open(ConfirmComponent, {
+    data: 'are you sure you want to delete?'
+  });
+  
+  dialogModal.afterClosed().subscribe((result) => {
+    console.log(result.data);
+  })
+
   }
 }

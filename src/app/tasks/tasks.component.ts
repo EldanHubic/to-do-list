@@ -4,7 +4,8 @@ import { CrudHttpService } from '../crud-http.service';
 import { ITask } from './itask';
 import { format } from 'date-fns';
 import { DialogService } from '../services/dialog.service';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from '../dialog/confirm/confirm.component';
 
 @Component({
   selector: 'app-tasks',
@@ -14,7 +15,7 @@ import { DialogService } from '../services/dialog.service';
 export class TasksComponent implements OnInit {
   constructor(
     private crudHttpService: CrudHttpService,
-    private dialogService: DialogService
+    private dialog: MatDialog
   ) {}
   @Input() todo: ITask[] = [];
   @Input() filterArray: ITask[] = [];
@@ -31,7 +32,7 @@ export class TasksComponent implements OnInit {
   display: string = 'none';
   private _search: string = '';
   notDeleted: boolean = false;
-  dialog: boolean = false;
+  isClicked: boolean = false;
   selectedTask: ITask = {
     id: 0,
     text: '',
@@ -58,18 +59,31 @@ export class TasksComponent implements OnInit {
     this.newDeadline = value;
   }
 
-  isClicked: boolean = false;
+
 
   ngOnInit(): void {}
 
+
+
   confirm(task: ITask): void {
-    let confirmed = window.confirm("Do you really want to delete this task?");
-    if(confirmed) {
-      this.deleteTodo(task);
-    }
+
+    let matDialog = this.dialog.open(ConfirmComponent);
+    matDialog.afterClosed().subscribe((result) => {
+      if(result.data === 'confirmed' ) {
+        this.deleteTodo(task);
+      }      
+      
+    })
+
+   
   }
 
-  
+  // confirm(task: ITask): void {
+  //   if (window.confirm('Are you sure yout want to delete this task?')) {
+  //     this.deleteTodo(task);
+  //   }
+  // }
+
   //obriši task
   deleteTodo(task: ITask): void {
     if (task.done) {

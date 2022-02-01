@@ -1,11 +1,25 @@
 {
   "tasks": [
     {
-      "text": "ccc",
-      "date": "31.01.2022",
+      "text": "task 1",
+      "date": "01.02.2022",
       "done": false,
-      "deadline": "06.02.2022",
+      "deadline": "16.02.2022",
+      "id": 1
+    },
+    {
+      "text": "task 2",
+      "date": "01.02.2022",
+      "done": false,
+      "deadline": "27.02.2022",
       "id": 2
+    },
+    {
+      "text": "task 3",
+      "date": "01.02.2022",
+      "done": false,
+      "deadline": "22.02.2022",
+      "id": 3
     }
   ]
 }
