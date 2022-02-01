@@ -62,7 +62,7 @@ export class AddTaskComponent implements OnInit {
         // console.log('uneseni mjesec veci ili jednak nego trenutni');
         if (
           (Number(newDeadline[2]) >= Number(arr[0]) &&
-            Number(newDeadline[1]) === Number(arr[1])) ||
+            Number(newDeadline[1]) >= Number(arr[1])) ||
           (Number(newDeadline[2]) <= Number(arr[0]) &&
             Number(newDeadline[1]) > Number(arr[1]))
         ) {
@@ -75,6 +75,7 @@ export class AddTaskComponent implements OnInit {
           };
           this.sub = this.crudHttpService.addTodo(task).subscribe((data) => {
             this.todo.push(data);
+            // this.filterArray.push(data);
             this._text = '';
             this.status = `Task: ${task.text} successfuly added to list.`;
             this.isAdded = true;

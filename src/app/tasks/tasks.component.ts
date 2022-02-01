@@ -141,15 +141,15 @@ export class TasksComponent implements OnInit {
     this.newDeadline = `${_newDeadline[2]}.${_newDeadline[1]}.${_newDeadline[0]}`;
     let arr = currentDate.split('.');
     if (_newDeadline[0] >= arr[2]) {
-      // console.log('unesena godina veca ili jednaka nego trenutna');
+      console.log('unesena godina veca ili jednaka nego trenutna');
 
-      if (_newDeadline[1] >= arr[1]) {
-        // console.log('uneseni mjesec veci ili jednak nego trenutni');
+      if (Number(_newDeadline[1]) >= Number(arr[1])) {
+        console.log('uneseni mjesec veci ili jednak nego trenutni');
         if (
           (Number(_newDeadline[2]) >= Number(arr[0]) &&
             Number(_newDeadline[1]) === Number(arr[1])) ||
           (Number(_newDeadline[2]) <= Number(arr[0]) &&
-            Number(_newDeadline[1]) > Number(arr[1]))
+            Number(_newDeadline[1]) > Number(arr[1])) 
         ) {
           let newTask = {
             id: task.id,
