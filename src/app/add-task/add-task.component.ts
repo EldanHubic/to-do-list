@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CrudHttpService } from '../crud-http.service';
 import { ITask } from '../tasks/itask';
 import { format } from 'date-fns';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-add-task',
@@ -45,7 +45,6 @@ export class AddTaskComponent implements OnInit {
     }, 3500);
   }
 
- 
   addTodo(): void {
     const currentDate = format(new Date(), 'dd.MM.yyyy');
     let newDeadline: string[] = this.deadline.toString().split('-');
@@ -80,8 +79,6 @@ export class AddTaskComponent implements OnInit {
             this.status = `Task: ${task.text} successfuly added to list.`;
             this.isAdded = true;
             this.FadeOutLink();
-          
-            
           });
         } else {
           this.status = this.deadlineMsg;
@@ -98,8 +95,6 @@ export class AddTaskComponent implements OnInit {
       this.addFail = true;
       this.FadeOutLink();
     }
-
-    
   }
 
   ngOnDestroy() {

@@ -19,8 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ConfirmComponent } from './dialog/confirm/confirm.component';
-
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,6 @@ import { ConfirmComponent } from './dialog/confirm/confirm.component';
     TasksComponent,
     ConvertDashToSpacePipe,
     ConfirmComponent,
-   
   ],
   imports: [
     BrowserModule,
@@ -43,6 +41,7 @@ import { ConfirmComponent } from './dialog/confirm/confirm.component';
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
+    Ng2SearchPipeModule,
     RouterModule.forRoot([
       { path: 'tasks', component: HomeComponent },
       { path: 'tasks/:id', component: HomeComponent },

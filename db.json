@@ -1,32 +1,25 @@
 {
   "tasks": [
     {
-      "text": "task 3",
-      "date": "01.02.2022",
+      "text": "task 1",
+      "date": "03.02.2022",
       "done": false,
-      "deadline": "22.02.2022",
+      "deadline": "10.02.2022",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "text": "task 2",
+      "date": "03.02.2022",
+      "done": true,
+      "deadline": "11.03.2022"
+    },
+    {
+      "text": "task 3",
+      "date": "03.02.2022",
+      "done": false,
+      "deadline": "09.03.2022",
       "id": 3
-    },
-    {
-      "text": "task 3",
-      "date": "01.02.2022",
-      "done": false,
-      "deadline": "02.02.2022",
-      "id": 4
-    },
-    {
-      "text": "aaa",
-      "date": "01.02.2022",
-      "done": false,
-      "deadline": "09.02.2022",
-      "id": 5
-    },
-    {
-      "text": "eee",
-      "date": "01.02.2022",
-      "done": false,
-      "deadline": "02.03.2022",
-      "id": 6
     }
   ]
 }

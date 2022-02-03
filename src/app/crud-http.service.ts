@@ -16,6 +16,27 @@ export class CrudHttpService {
   apiUrl: string = 'http://localhost:3000/tasks';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
+  allTasks$ = this.http
+    .get<ITask[]>(this.apiUrl)
+    .pipe(
+      tap(
+        (task) => console.log('Tasks: ', JSON.stringify(task)),
+        catchError(this.errorHandler)
+      )
+    );
+
+  addTodo(todo: ITask): Observable<ITask> {
+    return this.http
+      .post<ITask>(this.apiUrl, JSON.stringify(todo), { headers: this.headers })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  //delete task
+  deleteTodo(id: number): Observable<any> {
+    let API_URL = `${this.apiUrl}/${id}`;
+    return this.http.delete(API_URL).pipe(catchError(this.errorHandler));
+  }
+
   //get all tasks from server
   getTasks(): Observable<ITask[]> {
     return this.http
@@ -24,40 +45,17 @@ export class CrudHttpService {
   }
 
 
-
-  //add a new task
- addTodo(todo: ITask): Observable<ITask> {
-   return this.http.post<ITask>(this.apiUrl, JSON.stringify(todo), {headers: this.headers}).pipe(
-     catchError(this.errorHandler)
-   );
- }
-
-
-
-  //delete task
-  deleteTodo(id: number): Observable<any> {
-    let API_URL = `${this.apiUrl}/${id}`;
-    return this.http.delete(API_URL).pipe(
-      catchError(this.errorHandler) 
-    )
-  }
-
-
-
-
   //update task
   updateTask(id: any, data: ITask): Observable<any> {
     let API_URL = `${this.apiUrl}/${id}`;
-    return this.http.put(API_URL, data, { headers: this.headers }).pipe(
-      catchError(this.errorHandler)
-    )
+    return this.http
+      .put(API_URL, data, { headers: this.headers })
+      .pipe(catchError(this.errorHandler));
   }
-
-  
 
   errorHandler(error: HttpErrorResponse) {
     let errorMessage = '';
-    if(error.error instanceof ErrorEvent) {
+    if (error.error instanceof ErrorEvent) {
       // Get client-side error
       errorMessage = error.error.message;
     } else {
@@ -66,6 +64,5 @@ export class CrudHttpService {
     }
     console.log(errorMessage);
     return throwError(errorMessage);
- }
+  }
 }
-

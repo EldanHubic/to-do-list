@@ -13,6 +13,9 @@
         [(ngModel)]="search"
       />
     </div>
+    <!-- <div class="input-group mb-4 search">
+      <input type="text" [(ngModel)]="search" class="searchTerm" placeholder="What are you looking for?">
+    </div> -->
   </div>
   <div class="col">
     <div *ngIf="isDeletedFlag" class="alert alert-danger" role="alert">
@@ -49,7 +52,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="table-row" *ngFor="let task of filterArray">
+        <tr class="table-row" *ngFor="let task of todo | filter: search">
           <th class="table-data" scope="row">{{ task.id }}.</th>
           <td class="table-data">
             <input
@@ -168,8 +171,5 @@
         </tr>
       </tbody>
     </table>
-    
   </div>
 </div>
-
-

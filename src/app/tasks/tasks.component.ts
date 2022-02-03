@@ -1,12 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CrudHttpService } from '../crud-http.service';
 import { ITask } from './itask';
 import { format } from 'date-fns';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmComponent } from '../dialog/confirm/confirm.component';
 import { DialogService } from '../services/dialog.service';
-
 
 @Component({
   selector: 'app-tasks',
@@ -16,9 +13,7 @@ import { DialogService } from '../services/dialog.service';
 export class TasksComponent implements OnInit {
   constructor(
     private crudHttpService: CrudHttpService,
-    private dialog: MatDialog,
     private dialogService: DialogService
-   
   ) {}
   @Input() todo: ITask[] = [];
   @Input() filterArray: ITask[] = [];
@@ -52,7 +47,7 @@ export class TasksComponent implements OnInit {
   set search(searchParam: string) {
     this._search = searchParam;
 
-    this.filterArray = this.filterTasks(searchParam);
+    // this.filterArray = this.filterTasks(searchParam);
 
     console.log(this.filterArray);
     console.log(this._search);
@@ -79,25 +74,24 @@ export class TasksComponent implements OnInit {
     });
 
     dialog.subscribe((result) => {
-      if(result) {
+      if (result) {
         this.deleteTodo(task);
       }
-      
-    })
+    });
   }
 
   //obriši task
   deleteTodo(task: ITask): void {
     if (task.done) {
       this.crudHttpService.deleteTodo(task.id).subscribe((data) => {
-        const filteredIndex = this.filterArray.findIndex(
-          (el) => el.id === task.id
-        );
+        // const filteredIndex = this.filterArray.findIndex(
+        //   (el) => el.id === task.id
+        // );
 
-        if (filteredIndex > -1) {
-          this.filterArray.splice(filteredIndex, 1);
-          this.status = `Task: ${task.text.toUpperCase()} deleted!`;
-        }
+        // if (filteredIndex > -1) {
+        //   this.filterArray.splice(filteredIndex, 1);
+        //   this.status = `Task: ${task.text.toUpperCase()} deleted!`;
+        // }
         const todoIndex = this.todo.findIndex((el) => el.id === task.id);
 
         if (todoIndex > -1) {
@@ -141,15 +135,15 @@ export class TasksComponent implements OnInit {
     this.newDeadline = `${_newDeadline[2]}.${_newDeadline[1]}.${_newDeadline[0]}`;
     let arr = currentDate.split('.');
     if (_newDeadline[0] >= arr[2]) {
-      console.log('unesena godina veca ili jednaka nego trenutna');
+      // console.log('unesena godina veca ili jednaka nego trenutna');
 
       if (Number(_newDeadline[1]) >= Number(arr[1])) {
-        console.log('uneseni mjesec veci ili jednak nego trenutni');
+        // console.log('uneseni mjesec veci ili jednak nego trenutni');
         if (
           (Number(_newDeadline[2]) >= Number(arr[0]) &&
             Number(_newDeadline[1]) === Number(arr[1])) ||
           (Number(_newDeadline[2]) <= Number(arr[0]) &&
-            Number(_newDeadline[1]) > Number(arr[1])) 
+            Number(_newDeadline[1]) > Number(arr[1]))
         ) {
           let newTask = {
             id: task.id,
@@ -162,17 +156,17 @@ export class TasksComponent implements OnInit {
             .updateTask(task.id, newTask)
             .subscribe(
               () => {
-                const filteredIndex = this.filterArray.findIndex(
-                  (el) => el.id === this.selectedTask.id
-                );
+                // const filteredIndex = this.filterArray.findIndex(
+                //   (el) => el.id === this.selectedTask.id
+                // );
 
-                if (filteredIndex > -1) {
-                  this.filterArray.splice(filteredIndex, 1, newTask);
-                  this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`;
-                  this.newText = '';
-                  this.isEditedFlag = true;
-                  this.isDeletedFlag = false;
-                }
+                // if (filteredIndex > -1) {
+                //   this.filterArray.splice(filteredIndex, 1, newTask);
+                //   this.status = `Task: ${task.text.toUpperCase()} edited to ${newTask.text.toUpperCase()}`;
+                //   this.newText = '';
+                //   this.isEditedFlag = true;
+                //   this.isDeletedFlag = false;
+                // }
                 const todoIndex = this.todo.findIndex(
                   (el) => el.id === this.selectedTask.id
                 );
@@ -250,12 +244,12 @@ export class TasksComponent implements OnInit {
     );
   }
 
-  filterTasks(value: string): ITask[] {
-    value.toLocaleLowerCase();
-    return this.todo.filter((task: ITask) =>
-      task.text.toLocaleLowerCase().includes(value)
-    );
-  }
+  // filterTasks(value: string): ITask[] {
+  //   value.toLocaleLowerCase();
+  //   return this.todo.filter((task: ITask) =>
+  //     task.text.toLocaleLowerCase().includes(value)
+  //   );
+  // }
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
